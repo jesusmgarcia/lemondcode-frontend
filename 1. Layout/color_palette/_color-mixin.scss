@@ -1,0 +1,29 @@
+@mixin color-palette($color) {
+  @for $color-counter from 1 through 4 {
+    > .darken-#{$color-counter} {
+      $darken-color: darken($color, $color-counter * 5%);
+      background-color: $darken-color;
+
+      > span:after {
+        content: "" + $darken-color;
+      }
+    }
+
+    > .lighten-#{$color-counter} {
+      $lighten-color: lighten($color, $color-counter * 5%);
+      background-color: $lighten-color;
+
+      > span:after {
+        content: "" + $lighten-color;
+      }
+    }
+  }
+
+  > .base-color {
+    background-color: $color;
+
+    > span:after {
+      content: "" + $color;
+    }
+  }
+}
