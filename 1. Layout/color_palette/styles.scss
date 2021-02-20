@@ -5,12 +5,12 @@ $second-color: rgb(223, 226, 41);
 $third-color: rgb(106, 86, 219);
 
 body {
-  min-width: auto;;
+  min-width: auto;
 }
 
 .container {
   display: flex;
-  flex-direction: row;;
+  flex-direction: row;
   justify-content: center;
   padding: 0.5rem 3rem;
 }
