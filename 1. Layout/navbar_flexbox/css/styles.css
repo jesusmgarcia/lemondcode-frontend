@@ -1,0 +1,54 @@
+body {
+  margin: 0rem;
+  padding: 0rem;
+  font-family: 'Lato', sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.navbar-logo {
+  height: auto;
+  padding: 1rem 0rem 1rem 0.7rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.navbar {
+  background-color: blueviolet;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navbar > .navbar-link {
+  padding: 0.5rem 1.4rem;
+
+  font-weight: bold;
+  color: whitesmoke;
+  text-decoration: none;
+
+}
+
+.navbar > .navbar-link:hover {
+  background-color: darkmagenta;
+}
+
+@media (max-width: 576px) {
+
+  .navbar {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .navbar > .navbar-link {
+    text-align: center;
+  }
+
+}
