@@ -1,10 +1,14 @@
+$breakpoint-l: 1280px;
+$breakpoint-s: 576px;
+
+
 body {
   background-color: #141414;
   color: #de9649;
   margin: 0;
   width: 100%;
   font-family: 'Jost', sans-serif;
-  font-weight: semi-bold;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
@@ -67,64 +71,167 @@ header {
   font-size: 1.2rem;
 }
 
-.top {
+#top-text:after {
+  content: '' + "5";
+}
+
+@mixin flexbox_bar($minheight, $direction: row, $wrap: nowrap, $aligncontent: center) {
   display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: center;
+  align-content: $aligncontent;
+  align-items: center;
+  min-height: $minheight;
+}
+
+.top {
+  @include flexbox_bar(350px, row-reverse);
+/*  display: flex;
   flex-direction: row-reverse;
   flex-wrap: nowrap;
   justify-content: center;
   align-content: center;
   align-items: center;
-  min-height: 350px;
+  min-height: 350px;*/
 }
 
 .first {
-  display: flex;
+  @include flexbox_bar(250px, row);
+/*  display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+  justify-content: center;
   align-content: center;
   align-items: center;
-  min-height: 220px;
+  min-height: 220px;*/
 }
 
 .second {
-  display: flex;
+  @include flexbox_bar(250px, row);
+/*  display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+  justify-content: center;
   align-content: center;
   align-items: center;
-  min-height: 220px;
+  min-height: 220px;*/
 }
 
 .top-item {
   padding: 2px;
   flex: 1;
   transition: flex-grow 1s;
-}
+  height: 250px * 1.2;
 
-.top-item:hover {
-  flex-grow: 1.3;
+  &:hover {
+    flex-grow: 1.3;
+  }
 }
 
 .item {
   padding: 2px;
   flex: 1;
   transition: flex-grow 1s;
-}
+  height: 250px * 1.2;
 
-.item:hover {
-  flex-grow: 1.5;
-}
+  &:hover {
+    flex-grow: 1.3;
+  }
 
-.top-item > img {
-  //min-width: 225px;
-}
-
-.item > img {
-  //min-width: 250px;
 }
 
 img {
   width: 100%;
   height: auto;
-  object-fit: cover;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+// Tablet
+@media screen and (max-width: $breakpoint-l) {
+
+  .first {
+    padding: 20px 0 20px 0;
+    @include flexbox_bar(280px, row, wrap, center);
+  }
+
+  .second {
+    padding: 20px 0 20px 0;
+    @include flexbox_bar(280px, row, wrap, center);
+  }
+
+  .item {
+    height: 29vw;
+    min-width: 250px;
+  }
+
+  .top-item {
+    min-width: 225px;
+  }
+
+
+  .top-item:nth-of-type(-n+2) {
+    display:none;
+  }
+
+  #top-text:after {
+    content: '' + "3";
+  }
+
+  img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/*
+// Móvil
+@media screen and (max-width: $breakpoint-s) {
+
+  .top {
+    padding: 20px 20px 20px 20px;
+    @include flexbox-bar(280px, column-reverse, nowrap, center);
+    align-items: stretch;
+  }
+
+  .first {
+    padding: 20px 20px 20px 20px;
+    @include flexbox_bar(280px, column, nowrap, center);
+    align-items: stretch;
+    height: 300vh;
+  }
+
+  .second {
+    padding: 20px 20px 20px 20px;
+    @include flexbox_bar(280px, column, nowrap, center);
+    align-items: stretch;
+  }
+
+  .item {
+    padding: 2px;
+    flex: 1;
+    transition: flex-grow 1s;
+    min-width: 250px;
+    height: auto;
+
+    &:hover {
+      flex-grow: 1.3;
+    }
+
+  }
+
+  .section-title {
+    text-align: center;;
+  }
+
+  img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+*/
