@@ -1,10 +1,9 @@
-$breakpoint-l: 1280px;
-$breakpoint-s: 576px;
-
+@import "_vars";
+@import "_flexbox_bar";
 
 body {
-  background-color: #141414;
-  color: #de9649;
+  background-color: $back-color;
+  color: $primary-color;
   margin: 0;
   width: 100%;
   font-family: 'Jost', sans-serif;
@@ -16,16 +15,34 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 8rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #de9649;
+  border-bottom: 2px solid $primary-color;
+}
+
+main {
+  padding: 0 1rem;
+}
+
+footer {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+footer > .footer-logo {
+  height: auto;
+  width: 1.5rem;
+  padding: 1rem;
+
+  fill: $primary-color;
 }
 
 .sticky {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: #141414;
+  background-color: $back-color;
 }
 
 .header-logo {
@@ -50,15 +67,14 @@ header {
 }
 
 .button {
-  color: #de9649;
+  color: $primary-color;
   padding: 0.4rem;
   margin: 0.2rem;
-  font-size: 0.8rem;
 }
 
 .button:hover {
-  background-color: #de9649;
-  color: #141414;
+  background-color: $primary-color;
+  color: $back-color;
   border-radius: 0.2rem;
 }
 
@@ -69,60 +85,32 @@ header {
 
 .section-title {
   font-size: 1.2rem;
+  padding: 2rem 0;
 }
 
 #top-text:after {
   content: '' + "5";
 }
 
-@mixin flexbox_bar($minheight, $direction: row, $wrap: nowrap, $aligncontent: center) {
-  display: flex;
-  flex-direction: $direction;
-  flex-wrap: $wrap;
-  justify-content: center;
-  align-content: $aligncontent;
-  align-items: center;
-  min-height: $minheight;
-}
 
+// In >1280px resolutions, min-height will grow/decrease with a percentage
+// of width viewport size
 .top {
-  @include flexbox_bar(350px, row-reverse);
-/*  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  min-height: 350px;*/
+  @include flexbox_bar(20vw, row-reverse);
 }
 
 .first {
-  @include flexbox_bar(250px, row);
-/*  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  min-height: 220px;*/
+  @include flexbox_bar(13vw, row);
 }
 
 .second {
-  @include flexbox_bar(250px, row);
-/*  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  min-height: 220px;*/
+  @include flexbox_bar(13vw, row);
 }
 
 .top-item {
   padding: 2px;
   flex: 1;
   transition: flex-grow 1s;
-  height: 250px * 1.2;
 
   &:hover {
     flex-grow: 1.3;
@@ -133,10 +121,9 @@ header {
   padding: 2px;
   flex: 1;
   transition: flex-grow 1s;
-  height: 250px * 1.2;
 
   &:hover {
-    flex-grow: 1.3;
+    flex-grow: 1.4;
   }
 
 }
@@ -145,33 +132,34 @@ img {
   width: 100%;
   height: auto;
 
-  position: relative;
+  /*position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%);*/
 }
 
+// ----------------------------------------------------------
 // Tablet
+// ----------------------------------------------------------
+
 @media screen and (max-width: $breakpoint-l) {
 
+  .top {
+    @include flexbox_bar(30vw, row-reverse);
+  }
+
   .first {
-    padding: 20px 0 20px 0;
-    @include flexbox_bar(280px, row, wrap, center);
+    margin: -2rem 0 2rem 0;
+    @include flexbox_bar(37vw, row, wrap, center);
   }
 
   .second {
-    padding: 20px 0 20px 0;
-    @include flexbox_bar(280px, row, wrap, center);
+    margin: -2rem 0 2rem 0;
+    @include flexbox_bar(37vw, row, wrap, center);
   }
 
-  .item {
-    height: 29vw;
-    min-width: 250px;
+  .platform-title {
+    display: none;
   }
-
-  .top-item {
-    min-width: 225px;
-  }
-
 
   .top-item:nth-of-type(-n+2) {
     display:none;
@@ -181,6 +169,16 @@ img {
     content: '' + "3";
   }
 
+  .top-item {
+    min-width: 225px;
+    height: 23vw;
+  }
+
+  .item {
+    min-width: 250px;
+    height: 28vw;
+  }
+
   img {
     position: relative;
     top: 50%;
@@ -188,50 +186,28 @@ img {
   }
 }
 
-/*
+// ----------------------------------------------------------
 // Móvil
+// ----------------------------------------------------------
+
 @media screen and (max-width: $breakpoint-s) {
 
   .top {
-    padding: 20px 20px 20px 20px;
-    @include flexbox-bar(280px, column-reverse, nowrap, center);
-    align-items: stretch;
+    @include flexbox-bar(auto, column-reverse, nowrap, center, stretch);
   }
 
   .first {
-    padding: 20px 20px 20px 20px;
-    @include flexbox_bar(280px, column, nowrap, center);
-    align-items: stretch;
-    height: 300vh;
+    @include flexbox_bar(auto, column, nowrap, center, stretch);
+
   }
 
   .second {
-    padding: 20px 20px 20px 20px;
-    @include flexbox_bar(280px, column, nowrap, center);
-    align-items: stretch;
-  }
-
-  .item {
-    padding: 2px;
-    flex: 1;
-    transition: flex-grow 1s;
-    min-width: 250px;
-    height: auto;
-
-    &:hover {
-      flex-grow: 1.3;
-    }
+    @include flexbox_bar(auto, column, nowrap, center, stretch);
 
   }
 
   .section-title {
-    text-align: center;;
+    text-align: center;
   }
 
-  img {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 }
-*/

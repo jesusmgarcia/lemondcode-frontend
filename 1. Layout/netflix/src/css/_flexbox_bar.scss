@@ -1,0 +1,9 @@
+@mixin flexbox_bar($minheight, $direction: row, $wrap: nowrap, $aligncontent: center, $alignitems: center) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  justify-content: center;
+  align-content: $aligncontent;
+  align-items: $alignitems;
+  min-height: $minheight;
+}
