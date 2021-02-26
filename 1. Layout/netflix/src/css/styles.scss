@@ -15,7 +15,6 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 8rem;
   border-bottom: 2px solid $primary-color;
 }
 
@@ -148,7 +147,7 @@ img {
   .platform-title {
     display: none;
   }
-  
+
   .top-item:nth-of-type(-n+2) {
     display:none;
   }
