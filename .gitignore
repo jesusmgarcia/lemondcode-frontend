@@ -1,3 +1,20 @@
-**/node_modules
+# Parcel
 **/.cache
 **/dist
+
+# VSCode
+**/.vscode
+
+# System
+**/.DS_Store
+**/desktop.ini
+
+# NPM & Yarn
+**/node_modules
+**/yarn.lock
+**/package-lock.json
+
+# Others
+**/build/
+*.log
+*.orig
