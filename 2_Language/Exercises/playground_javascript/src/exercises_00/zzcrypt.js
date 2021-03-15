@@ -7,5 +7,17 @@ var plain = "abcdefghijklmnopqrstuvwxyz:()!¡,'";
 var cipher = "qw,ert(yuio'pa:sdfg!hjklz¡xcv)bnm";
 
 function decrypt(secret) {
-  // Implementation here.
+
+  return secret.split("").map( element => {
+
+    let index = cipher.indexOf(element);
+
+    if(index === -1)
+      return " ";
+    else
+      return plain[index];
+
+  }).join("");
 }
+
+console.log(decrypt(secret));

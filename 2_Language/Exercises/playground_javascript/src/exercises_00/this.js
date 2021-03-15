@@ -15,3 +15,7 @@ console.log(person.wife.getSurname());
 var surnameFunction = person.wife.getSurname;
 console.log(surnameFunction());
 console.log(surnameFunction.call(person));
+
+// -> Jiménez. this está en el contexto del objeto wife
+// -> Pérez. this está en el contexto del objeto window
+// -> González. this está en el contexto del objeto person
