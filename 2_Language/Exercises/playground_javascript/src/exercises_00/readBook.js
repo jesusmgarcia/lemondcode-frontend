@@ -1,5 +1,11 @@
 function isBookRead(books, titleToSearch) {
-  // Implementation here
+
+  for (const book of books) {
+    if(book.title == titleToSearch)
+      return book.isRead;
+  }
+
+  return false;
 }
 
 // Ejemplo:
