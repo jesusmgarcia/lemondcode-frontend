@@ -16,5 +16,10 @@
 
 # Others
 **/build/
+**/transpiled/
 *.log
 *.orig
+
+
+
+# */src/**/*.js.map
