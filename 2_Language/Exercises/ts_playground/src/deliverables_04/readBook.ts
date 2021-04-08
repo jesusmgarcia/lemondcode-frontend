@@ -5,12 +5,21 @@ interface Book {
 
 function isBookRead(books: Book[], titleToSearch: string): boolean {
 
-  for (const book of books) {
+  /*for (const book of books) {
     if (book.title == titleToSearch)
       return book.isRead;
   }
 
-  return false;
+  return false;*/
+
+  let bookRead = books.find(book => book.title == titleToSearch);
+
+  if (bookRead === undefined) {
+    return false;
+  } else {
+    return bookRead.isRead;
+  }
+
 }
 
 // Ejemplo:
