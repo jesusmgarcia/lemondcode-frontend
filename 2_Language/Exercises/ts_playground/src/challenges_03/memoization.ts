@@ -2,7 +2,7 @@
 // Apartado A: Memoization
 // Apartado B: Memoization in 1 line
 //
-{
+
 console.group("First memoized (A and B)");
 
 let count = 0; // Comprobacion de nº de ejecuciones
@@ -56,7 +56,7 @@ console.log(memoized2());// 3.1415
 console.log(`Function called ${count} times`);// 2
 
 console.groupEnd();
-}
+
 //
 // Apartado C: Memoize with arguments and typed(TS)
 //
