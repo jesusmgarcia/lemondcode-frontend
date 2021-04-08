@@ -60,7 +60,7 @@ const run3 = triggers => {
 
 }
 
-// 3 ways of synchronize promises
-//run1(triggers);
-run2(triggers);
+// 3 ways of synchronize promises, decomment 1 by 1
+run1(triggers);
+//run2(triggers);
 //run3(triggers);
