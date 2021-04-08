@@ -4,7 +4,7 @@ const flatten = function<T>(array: T[], resultArray: T[] = []): T[] {
 
   const length: number = array.length;
 
-  for (let i = 0; i < length; i++) {
+  for (let i: number = 0; i < length; i++) {
 
     const value: T = array[i];
 
