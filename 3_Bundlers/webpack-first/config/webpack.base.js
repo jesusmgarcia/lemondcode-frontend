@@ -9,7 +9,7 @@ module.exports = {
   context: path.join(basePath, "src"),
   entry: {
     app: "./index.js",
-    appStyles: ["./styles.scss"]
+    appStyles: ["./scss/styles.scss"]
   },
   output: {
     filename: "[name].[chunkhash].js",
@@ -35,6 +35,10 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(png|jpg)$/,
+        type: "asset/resource",
       },
     ],
   },
