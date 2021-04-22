@@ -1,10 +1,10 @@
-$back-color: teal;
+$back-color: lightblue;
 
-.back-color {
+:global(.back-color) {
 	background-color: $back-color;
 }
 
-.logo-style {
+:global(.logo-style) {
 	display: block;
 	width: 300px;
 }

@@ -17,7 +17,6 @@ module.exports = {
   output: {
     filename: "[name].[chunkhash].js",
     path: path.join(basePath, "dist"),
-    publicPath: "./"
   },
   module: {
     rules: [
@@ -54,11 +53,15 @@ module.exports = {
         test: /\.(png|jpg)$/,
         type: "asset/resource",
       },
+      {
+        test: /\.html$/,
+        loader: "html-loader",
+      },
     ],
   },
   devServer: {
     port: 8080,
-    stats: "errors-only",
+    //stats: "errors-only",
   },
   plugins: [
     new HtmlWebpackPlugin({
