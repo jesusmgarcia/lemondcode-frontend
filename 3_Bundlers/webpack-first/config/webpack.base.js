@@ -4,21 +4,25 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 const basePath = path.resolve(process.cwd());
-
+console.log(basePath);
 module.exports = {
   context: path.join(basePath, "src"),
+  resolve: {
+    extensions: [".js", ".ts", ".tsx"],
+  },
   entry: {
-    app: "./index.js",
+    app: "./index.tsx",
     appStyles: ["./scss/styles.scss"]
   },
   output: {
     filename: "[name].[chunkhash].js",
     path: path.join(basePath, "dist"),
+    publicPath: "./"
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx$/,
         exclude: /node_modules/,
         loader: "babel-loader",
       },
@@ -27,7 +31,17 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                exportLocalsConvention: "camelCase",
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                localIdentContext: path.resolve(basePath, "src"),
+                localIdentHashPrefix: "my-custom-hash",
+              },
+            },
+          },
           {
             loader: "sass-loader",
             options: {
@@ -44,6 +58,7 @@ module.exports = {
   },
   devServer: {
     port: 8080,
+    stats: "errors-only",
   },
   plugins: [
     new HtmlWebpackPlugin({
