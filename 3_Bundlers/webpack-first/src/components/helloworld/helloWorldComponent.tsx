@@ -4,7 +4,7 @@ import classes from './helloWorldComponentStyles.scss';
 export const HelloWorldComponent = () => {
 	return (
 		<div>
-			<span className={classes.resultBackground}>Hello World!</span>
+			<span className={classes.resultBackground}>Hello React!</span>
 		</div>
 	);
 };
