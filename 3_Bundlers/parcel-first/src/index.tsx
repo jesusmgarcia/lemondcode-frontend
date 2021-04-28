@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { HelloWorldComponent } from './components/helloworld/helloWorldComponent';
 import './scss/styles.scss';
 
+console.log(`Api base: ${process.env.API_BASE}`);
+
 ReactDOM.render(
 	<div>
 		<h1>React</h1>
