@@ -62,7 +62,7 @@ export const DetailPage: React.FC = () => {
 					<CardMedia
 						className={cardClasses.media}
 						image={member.avatar_url}
-						title="Contemplative Reptile"
+						title={member.login}
 					/>
 					<CardContent>
 						<Typography gutterBottom variant="h5" component="h2">
