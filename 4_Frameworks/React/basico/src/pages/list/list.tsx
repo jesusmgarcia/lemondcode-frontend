@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, generatePath, useParams } from "react-router-dom";
 import { OrgContext } from "../../components/OrgContextProvider/OrgContextProvider";
-
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -19,41 +18,73 @@ import * as classes from "./list.styles";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import CardActions from "@material-ui/core/CardActions";
+import Pagination from "@material-ui/lab/Pagination";
 
+let parseLink = require("parse-link-header");
 interface MemberEntity {
 	id: string;
 	login: string;
 	avatar_url: string;
 }
 
+const itemsPerPage = 5;
+
+// styles for avatar images
+const useStyles = makeStyles((theme) => ({
+	sizeAvatar: {
+		height: theme.spacing(6),
+		width: theme.spacing(6)
+	}
+}));
+
 // TODO: In order to persist organization name, save it to localStorage
 
 export const ListPage: React.FC = () => {
-	// organization context where we save organization name
+	// organization context
 	const { orgName, setOrgName } = React.useContext(OrgContext);
+	const { currentPage, setCurrentPage } = React.useContext(OrgContext);
+	const { totalPages, setTotalPages } = React.useContext(OrgContext);
+
 	// local component data, filter is feeded with the context
 	const [members, setMembers] = React.useState<MemberEntity[]>([]);
-	const [filter, setFilter] = React.useState<string>(orgName);
-
-	// styles for avatar images
-	const useStyles = makeStyles((theme) => ({
-		sizeAvatar: {
-			height: theme.spacing(6),
-			width: theme.spacing(6)
-		}
-	}));
 
 	const avatarClass = useStyles();
+
+	const getMemberList = async (): Promise<MemberEntity[]> => {
+		return fetch(
+			`https://api.github.com/orgs/${orgName}/members?per_page=${itemsPerPage}&page=${currentPage}`
+		)
+			.then((response) => {
+				let parsedLink = parseLink(response.headers.get("Link"));
+				if (parsedLink.last) setTotalPages(parsedLink.last.page);
+				if (response.ok) return response.json();
+				else return [];
+			})
+			.then((json) => json)
+			.catch((error) => {
+				console.error(error);
+				return [];
+			});
+	};
+
+	const onLoadComponent = async () => {
+		const memberList = await getMemberList();
+		setMembers(memberList);
+	};
+
+	React.useEffect(() => {
+		onLoadComponent();
+	}, [currentPage]);
 
 	// handle organization name and save it to context
 	function handleOrgName(value) {
 		setOrgName(value);
-		setFilter(value);
 	}
 
 	// GET to github REST API to get our default organization member list
 	React.useEffect(() => {
-		handleSearch(null);
+		//setCurrentPage(contextCurrentPage);
+		//setContextCurrentPage(contextCurrentPage);
 	}, []);
 
 	// GET to github REST API to get the organization member list given
@@ -61,14 +92,13 @@ export const ListPage: React.FC = () => {
 	function handleSearch(e) {
 		if (e) e.preventDefault();
 
-		fetch(`https://api.github.com/orgs/${filter}/members`)
-			.then((response) => {
-				if (response.ok) return response.json();
-				else return [];
-			})
-			.then((json) => setMembers(json))
-			.catch((error) => console.error(error));
+		setCurrentPage(1);
 	}
+
+	const handlePageChange = (event, value) => {
+		//setCurrentPage(value);
+		setCurrentPage(value);
+	};
 
 	return (
 		<div className={classes.root}>
@@ -79,7 +109,7 @@ export const ListPage: React.FC = () => {
 						<TextField
 							label="Search Org Name"
 							margin="normal"
-							value={filter}
+							value={orgName}
 							onChange={(e) => handleOrgName(e.target.value)}
 						/>
 					</CardContent>
@@ -90,7 +120,6 @@ export const ListPage: React.FC = () => {
 					</CardActions>
 				</Card>
 			</form>
-
 			<div className={classes.table_50}>
 				<TableContainer component={Paper}>
 					<Table aria-label="list table">
@@ -125,6 +154,12 @@ export const ListPage: React.FC = () => {
 					</Table>
 				</TableContainer>
 			</div>
+			<Pagination
+				count={Number(totalPages)}
+				page={Number(currentPage)}
+				onChange={handlePageChange}
+				size="large"
+			/>
 		</div>
 	);
 };

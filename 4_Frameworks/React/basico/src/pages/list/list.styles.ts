@@ -5,13 +5,12 @@ export const root = css`
 	grid-template-columns: 1fr;
 	align-items: center;
 	margin-top: 2rem;
-	@media (min-width: 800px) {
-		justify-items: center;
-	}
+	justify-items: center;
 `;
 
 export const table_50 = css`
 	margin-top: 3rem;
+	margin-bottom: 1rem;
 	width: 50%;
 	@media (max-width: 800px) {
 		width: 100%;
