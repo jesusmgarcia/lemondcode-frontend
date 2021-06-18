@@ -67,25 +67,19 @@ export const ListPage: React.FC = () => {
 			});
 	};
 
-	const onLoadComponent = async () => {
+	const onLoadMemberList = async () => {
 		const memberList = await getMemberList();
 		setMembers(memberList);
 	};
 
 	React.useEffect(() => {
-		onLoadComponent();
+		onLoadMemberList();
 	}, [currentPage]);
 
 	// handle organization name and save it to context
 	function handleOrgName(value) {
 		setOrgName(value);
 	}
-
-	// GET to github REST API to get our default organization member list
-	React.useEffect(() => {
-		//setCurrentPage(contextCurrentPage);
-		//setContextCurrentPage(contextCurrentPage);
-	}, []);
 
 	// GET to github REST API to get the organization member list given
 	// by the user
@@ -96,7 +90,6 @@ export const ListPage: React.FC = () => {
 	}
 
 	const handlePageChange = (event, value) => {
-		//setCurrentPage(value);
 		setCurrentPage(value);
 	};
 
