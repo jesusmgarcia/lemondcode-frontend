@@ -27,11 +27,13 @@ interface MemberEntity {
 }
 
 export const ListPage: React.FC = () => {
-	const [members, setMembers] = React.useState<MemberEntity[]>([]);
+	// organization context where we save organization name
 	const { orgName, setOrgName } = React.useContext(OrgContext);
-
+	// local component data, filter is feeded with the context
+	const [members, setMembers] = React.useState<MemberEntity[]>([]);
 	const [filter, setFilter] = React.useState<string>(orgName);
 
+	// styles for avatar images
 	const useStyles = makeStyles((theme) => ({
 		sizeAvatar: {
 			height: theme.spacing(6),
@@ -41,15 +43,19 @@ export const ListPage: React.FC = () => {
 
 	const avatarClass = useStyles();
 
+	// handle organization name and save it to context
 	function handleOrgName(value) {
 		setOrgName(value);
 		setFilter(value);
 	}
 
+	// GET to github REST API to get our default organization member list
 	React.useEffect(() => {
 		handleSearch(null);
 	}, []);
 
+	// GET to github REST API to get the organization member list given
+	// by the user
 	function handleSearch(e) {
 		fetch(`https://api.github.com/orgs/${filter}/members`)
 			.then((response) => response.json())
