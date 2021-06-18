@@ -1,5 +1,7 @@
 import React from "react";
-import { Link, generatePath } from "react-router-dom";
+import { Link, generatePath, useParams } from "react-router-dom";
+import { OrgContext } from "../../components/OrgContextProvider/OrgContextProvider";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -26,7 +28,9 @@ interface MemberEntity {
 
 export const ListPage: React.FC = () => {
 	const [members, setMembers] = React.useState<MemberEntity[]>([]);
-	const [filter, setFilter] = React.useState<string>("lemoncode");
+	const { orgName, setOrgName } = React.useContext(OrgContext);
+
+	const [filter, setFilter] = React.useState<string>(orgName);
 
 	const useStyles = makeStyles((theme) => ({
 		sizeAvatar: {
@@ -36,6 +40,11 @@ export const ListPage: React.FC = () => {
 	}));
 
 	const avatarClass = useStyles();
+
+	function handleOrgName(value) {
+		setOrgName(value);
+		setFilter(value);
+	}
 
 	React.useEffect(() => {
 		handleSearch(null);
@@ -56,7 +65,7 @@ export const ListPage: React.FC = () => {
 						label="Search Org Name"
 						margin="normal"
 						value={filter}
-						onChange={(e) => setFilter(e.target.value)}
+						onChange={(e) => handleOrgName(e.target.value)}
 					/>
 				</CardContent>
 				<CardActions style={{ justifyContent: "center" }}>
@@ -97,7 +106,7 @@ export const ListPage: React.FC = () => {
 											to={generatePath("/detail/:id", { id: member.login })}
 										>
 											{member.login}
-										</Link>{" "}
+										</Link>
 									</TableCell>
 								</TableRow>
 							))}

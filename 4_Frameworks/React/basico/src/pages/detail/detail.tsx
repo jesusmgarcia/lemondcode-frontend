@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -36,12 +36,18 @@ const createDefaultMemberDetail = () => ({
 	bio: ""
 });
 
+type IdParams = {
+	id: string;
+};
+
 export const DetailPage: React.FC = () => {
 	const [member, setMember] = React.useState<MemberDetailEntity>(
 		createDefaultMemberDetail()
 	);
-	const { id } = useParams();
+	const { id } = useParams<IdParams>();
 	const cardClasses = useStyles();
+
+	const history = useHistory();
 
 	React.useEffect(() => {
 		fetch(`https://api.github.com/users/${id}`)
@@ -68,11 +74,9 @@ export const DetailPage: React.FC = () => {
 					</CardContent>
 				</CardActionArea>
 				<CardActions>
-					<Link to="/list">
-						<Button size="small" color="primary">
-							Back to list page
-						</Button>
-					</Link>
+					<Button onClick={history.goBack} size="small" color="primary">
+						Back to list page
+					</Button>
 				</CardActions>
 			</Card>
 		</div>
