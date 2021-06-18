@@ -26,6 +26,8 @@ interface MemberEntity {
 	avatar_url: string;
 }
 
+// TODO: In order to persist organization name, save it to localStorage
+
 export const ListPage: React.FC = () => {
 	// organization context where we save organization name
 	const { orgName, setOrgName } = React.useContext(OrgContext);
@@ -57,34 +59,37 @@ export const ListPage: React.FC = () => {
 	// GET to github REST API to get the organization member list given
 	// by the user
 	function handleSearch(e) {
+		if (e) e.preventDefault();
+
 		fetch(`https://api.github.com/orgs/${filter}/members`)
-			.then((response) => response.json())
-			.then((json) => setMembers(json));
+			.then((response) => {
+				if (response.ok) return response.json();
+				else return [];
+			})
+			.then((json) => setMembers(json))
+			.catch((error) => console.error(error));
 	}
 
 	return (
 		<div className={classes.root}>
-			<Card>
-				<CardHeader title="Github Org List" />
-				<CardContent>
-					<TextField
-						label="Search Org Name"
-						margin="normal"
-						value={filter}
-						onChange={(e) => handleOrgName(e.target.value)}
-					/>
-				</CardContent>
-				<CardActions style={{ justifyContent: "center" }}>
-					<Button
-						type="submit"
-						onClick={(e) => handleSearch(e)}
-						variant="contained"
-						color="primary"
-					>
-						Search
-					</Button>
-				</CardActions>
-			</Card>
+			<form onSubmit={(e) => handleSearch(e)}>
+				<Card>
+					<CardHeader title="Github Org List" />
+					<CardContent>
+						<TextField
+							label="Search Org Name"
+							margin="normal"
+							value={filter}
+							onChange={(e) => handleOrgName(e.target.value)}
+						/>
+					</CardContent>
+					<CardActions style={{ justifyContent: "center" }}>
+						<Button type="submit" variant="contained" color="primary">
+							Search
+						</Button>
+					</CardActions>
+				</Card>
+			</form>
 
 			<div className={classes.table_50}>
 				<TableContainer component={Paper}>
