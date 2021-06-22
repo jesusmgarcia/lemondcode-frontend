@@ -50,6 +50,8 @@ export const ListPage: React.FC = () => {
 
 	const avatarClass = useStyles();
 
+	// GET to github REST API to get the organization member list given
+	// by the user
 	const getMemberList = async (): Promise<MemberEntity[]> => {
 		return fetch(
 			`https://api.github.com/orgs/${orgName}/members?per_page=${itemsPerPage}&page=${currentPage}`
@@ -72,6 +74,7 @@ export const ListPage: React.FC = () => {
 		setMembers(memberList);
 	};
 
+	// When the page changes, we reload the member list (also when the component is mounted)
 	React.useEffect(() => {
 		onLoadMemberList();
 	}, [currentPage]);
@@ -81,14 +84,14 @@ export const ListPage: React.FC = () => {
 		setOrgName(value);
 	}
 
-	// GET to github REST API to get the organization member list given
-	// by the user
+	// form submit, set the page to the first one and reload the member list
 	function handleSearch(e) {
 		if (e) e.preventDefault();
 
 		setCurrentPage(1);
 	}
 
+	// pagination changed, set the indicated page and reload the member list
 	const handlePageChange = (event, value) => {
 		setCurrentPage(value);
 	};
