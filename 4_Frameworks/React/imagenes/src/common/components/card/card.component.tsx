@@ -28,16 +28,16 @@ export const CardComponent: React.FunctionComponent<Props> = (props) => {
   const image = props.image;
   const cardClasses = cardStyles();
 
-  const [checked, setChecked] = React.useState(false);
   const { imageList, setImageList } = React.useContext(ShopContext);
 
-  React.useEffect(() => {
-    setChecked(image.selected);
-  }, []);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-    setImageList([...imageList, image]);
+    image.selected = event.target.checked;
+
+    if (image.selected) {
+      setImageList([...imageList, image]);
+    } else {
+      setImageList(imageList.filter((element) => element.id != image.id));
+    }
   };
 
   return (
@@ -60,13 +60,13 @@ export const CardComponent: React.FunctionComponent<Props> = (props) => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={checked}
+              checked={image.selected}
               onChange={handleChange}
               name="Buy"
               inputProps={{ 'aria-label': 'primary checkbox' }}
             />
           }
-          label="Buy"
+          label="Add to Cart"
         />
       </CardActions>
     </Card>

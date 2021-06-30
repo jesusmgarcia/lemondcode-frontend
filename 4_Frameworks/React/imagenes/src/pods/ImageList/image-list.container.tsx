@@ -33,6 +33,20 @@ export const ImageListContainer: React.FC<Props> = (props) => {
     onLoadImageList();
   }, []);
 
+  React.useEffect(() => {
+    const newImages = [...images];
+
+    newImages.forEach((element) => {
+      element.selected = false;
+
+      imageList.forEach((cartElement) => {
+        if (cartElement.id == element.id) element.selected = true;
+      });
+    });
+
+    setImages(newImages);
+  }, [imageList]);
+
   return (
     <>
       <ImageListComponent ImageCollection={images} />

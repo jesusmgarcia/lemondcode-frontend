@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { routes } from 'core/router';
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -18,10 +20,13 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import { ShopContext } from 'common/components/ShopContextProvider';
+import Badge from '@material-ui/core/Badge';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 
 const drawerWidth = 440;
 
@@ -63,7 +68,15 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0, 1),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
+    },
+    drawerFooter: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
     },
     content: {
       flexGrow: 1,
@@ -81,6 +94,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginRight: 0,
     },
+    checkoutButton: {
+      margin: '0rem 0rem',
+    },
   })
 );
 
@@ -88,6 +104,13 @@ export const AppLayout: React.FC = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [numberInCartBadge, setNumberInCartBadge] = React.useState(0);
+
+  const { imageList, setImageList } = React.useContext(ShopContext);
+
+  React.useEffect(() => {
+    setNumberInCartBadge(imageList.length);
+  }, [imageList]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -95,6 +118,14 @@ export const AppLayout: React.FC = ({ children }) => {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleEmptyCart = () => {
+    setImageList([]);
+  };
+
+  const handleDeleteClick = (event, id) => {
+    setImageList(imageList.filter((element) => element.id != id));
   };
 
   return (
@@ -117,7 +148,9 @@ export const AppLayout: React.FC = ({ children }) => {
             onClick={handleDrawerOpen}
             className={clsx(open && classes.hide)}
           >
-            <ShoppingCartIcon />
+            <Badge badgeContent={numberInCartBadge} color="secondary" showZero>
+              <ShoppingCartIcon color="action" />
+            </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -146,29 +179,50 @@ export const AppLayout: React.FC = ({ children }) => {
               <ChevronRightIcon />
             )}
           </IconButton>
+          <Button
+            onClick={handleEmptyCart}
+            variant="contained"
+            color="secondary"
+          >
+            Empty Cart
+          </Button>
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+          {imageList.map((image) => (
+            <ListItem button key={image.id}>
+              <ListItemAvatar>
+                <Avatar alt={image.title} src={image.imageUrl} />
+              </ListItemAvatar>
+              <ListItemText primary={image.title} />
+              <IconButton
+                onClick={(event) => handleDeleteClick(event, image.id)}
+                aria-label="delete"
+                color="primary"
+              >
+                <DeleteIcon />
+              </IconButton>
             </ListItem>
           ))}
         </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        {numberInCartBadge > 0 && (
+          <div>
+            <Divider />
+            <div className={classes.drawerFooter}>
+              <Link to={routes.checkout}>
+                <Button
+                  onClick={handleEmptyCart}
+                  className={classes.checkoutButton}
+                  variant="contained"
+                  color="primary"
+                >
+                  Checkout
+                </Button>
+              </Link>
+            </div>
+            <Divider />
+          </div>
+        )}
       </Drawer>
     </div>
   );
