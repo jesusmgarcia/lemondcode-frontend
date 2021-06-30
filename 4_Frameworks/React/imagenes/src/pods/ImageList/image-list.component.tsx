@@ -25,10 +25,7 @@ export const ImageListComponent: React.FC<Props> = (props) => {
       <Grid container spacing={3}>
         {imageList.map((image) => (
           <Grid key={image.id} item xs={3}>
-            <CardComponent
-              description={image.description}
-              imageUrl={image.image}
-            />
+            <CardComponent image={image} />
           </Grid>
         ))}
       </Grid>

@@ -1,6 +1,6 @@
 export interface Image {
-    id: number;
-    description: string;
-    image: string;
-    buy: boolean;
+  id: number;
+  title: string;
+  imageUrl: string;
+  selected: boolean;
 }

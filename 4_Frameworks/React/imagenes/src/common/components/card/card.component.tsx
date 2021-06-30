@@ -8,10 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import * as viewModel from '../../../pods/ImageList/image-list.vm';
+import { ShopContext } from '../ShopContextProvider';
 
 interface Props {
-  description: string;
-  imageUrl: string;
+  image: viewModel.Image;
 }
 
 const cardStyles = makeStyles((theme: Theme) =>
@@ -24,14 +25,19 @@ const cardStyles = makeStyles((theme: Theme) =>
 );
 
 export const CardComponent: React.FunctionComponent<Props> = (props) => {
-  const description = props.description;
-  const imageUrl = props.imageUrl;
+  const image = props.image;
   const cardClasses = cardStyles();
 
   const [checked, setChecked] = React.useState(false);
+  const { imageList, setImageList } = React.useContext(ShopContext);
+
+  React.useEffect(() => {
+    setChecked(image.selected);
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+    setImageList([...imageList, image]);
   };
 
   return (
@@ -39,14 +45,14 @@ export const CardComponent: React.FunctionComponent<Props> = (props) => {
       <CardActionArea>
         <CardMedia
           component="img"
-          alt={description}
-          height="140"
-          image={imageUrl}
-          title={description}
+          alt={image.title}
+          height="240"
+          image={image.imageUrl}
+          title={image.title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {description}
+            {image.title}
           </Typography>
         </CardContent>
       </CardActionArea>
