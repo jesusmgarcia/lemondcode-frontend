@@ -7,7 +7,7 @@ export const RouterComponent: React.FunctionComponent = () => {
   return (
     <Router>
       <Switch>
-        <Route exact={true} path={[switchRoutes.root]} component={HomeScene} />
+        <Route exact={true} path={switchRoutes.root} component={HomeScene} />
         <Route exact={true} path={switchRoutes.cats} component={CatsScene} />
         <Route exact={true} path={switchRoutes.dogs} component={DogsScene} />
         <Route

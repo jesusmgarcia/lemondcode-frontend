@@ -14,11 +14,9 @@ export const switchRoutes: SwitchRoutes = {
   checkout: '/checkout',
 };
 
-interface Routes extends Omit<SwitchRoutes, 'editEmployee'> {
-  //editEmployee: (id: string) => string;
+interface Routes extends SwitchRoutes {
 }
 
 export const routes: Routes = {
   ...switchRoutes,
-  //editEmployee: (id) => generatePath(switchRoutes.editEmployee, { id }),
 };

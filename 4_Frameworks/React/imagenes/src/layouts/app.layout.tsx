@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    titleLink: {
+      color: 'white',
+      textDecoration: 'none',
+    },
     hide: {
       display: 'none',
     },
@@ -139,7 +143,9 @@ export const AppLayout: React.FC = ({ children }) => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap className={classes.title}>
-            Photo Ecommerce
+            <Link to={routes.root} className={classes.titleLink}>
+              Photo Ecommerce
+            </Link>
           </Typography>
           <IconButton
             color="inherit"
@@ -211,7 +217,6 @@ export const AppLayout: React.FC = ({ children }) => {
             <div className={classes.drawerFooter}>
               <Link to={routes.checkout}>
                 <Button
-                  onClick={handleEmptyCart}
                   className={classes.checkoutButton}
                   variant="contained"
                   color="primary"
