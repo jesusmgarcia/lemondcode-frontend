@@ -5,12 +5,12 @@
         <v-img
           class="white--text align-end"
           height="200px"
-          src="https://avatars.githubusercontent.com/u/14540103?v=4"
+          :src="member.avatar_url"
         >
         </v-img>
-        <v-card-title>Antonio</v-card-title>
+        <v-card-title>{{ member.login }}</v-card-title>
         <v-card-text class="text--primary">
-          <div>Texto</div>
+          <div>{{ member.bio }}</div>
         </v-card-text>
 
         <v-card-actions>
@@ -21,4 +21,20 @@
   </v-row>
 </template>
 
-<script></script>
+<script lang="ts">
+import { MemberDetailEntity } from '@/types'
+import { Context } from '@nuxt/types'
+
+export default {
+  async asyncData({ app, params }: Context) {
+    return {
+      member: await app.$githubRepository.getMember(params.id),
+    }
+  },
+  data() {
+    return {
+      member: {} as MemberDetailEntity,
+    }
+  },
+}
+</script>

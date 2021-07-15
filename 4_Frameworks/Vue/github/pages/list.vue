@@ -3,13 +3,12 @@
     <v-col cols="12" sm="8" md="6">
       <v-card class="mt-sm-8">
         <v-card-title class="headline"> Github Org List </v-card-title>
-        <v-form v-model="valid">
+        <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" sm="12">
                 <v-text-field
                   v-model="orgName"
-                  :rules="nameRules"
                   :counter="20"
                   label="Organization Name"
                   required
@@ -35,14 +34,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in desserts" :key="item.name">
+            <tr v-for="item in members" :key="item.id">
               <td>
                 <v-avatar class="ma-sm-4" size="48px">
-                  <img v-if="item.avatar" :alt="item.name" :src="item.avatar" />
+                  <img
+                    v-if="item.avatar_url"
+                    :alt="item.login"
+                    :src="item.avatar_url"
+                  />
                 </v-avatar>
               </td>
               <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
+
+              <td>
+                <nuxt-link :to="`/${item.login}`">
+                  {{ item.login }}
+                </nuxt-link>
+              </td>
             </tr>
           </tbody>
         </template>
@@ -59,18 +67,21 @@
   </v-row>
 </template>
 
-<script>
+<script lang="ts">
+import { MemberEntity } from '@/types'
+import { Context } from '@nuxt/types'
+
 export default {
+  async asyncData({ app }: Context) {
+    return {
+      members: await app.$githubRepository.getMembers('lemoncode', 18, 1),
+    }
+  },
   data() {
     return {
-      desserts: [
-        {
-          avatar: 'https://avatars.githubusercontent.com/u/14540103?v=4',
-          id: 1,
-          name: 'Antonio',
-        },
-      ],
+      members: [] as MemberEntity[],
       page: 1,
+      orgName: 'lemoncode',
     }
   },
 }
