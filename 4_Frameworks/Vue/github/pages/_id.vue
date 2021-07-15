@@ -14,7 +14,9 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="primary" text> Back to List Page </v-btn>
+          <v-btn @click="onClick" color="primary" text>
+            Back to List Page
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -35,6 +37,11 @@ export default {
     return {
       member: {} as MemberDetailEntity,
     }
+  },
+  methods: {
+    onClick() {
+      this.$router.back()
+    },
   },
 }
 </script>

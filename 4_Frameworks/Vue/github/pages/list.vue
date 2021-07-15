@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card class="mt-sm-8">
+      <v-card class="mt-sm-8" ref="form">
         <v-card-title class="headline"> Github Org List </v-card-title>
         <v-form>
           <v-container>
@@ -10,6 +10,7 @@
                 <v-text-field
                   v-model="orgName"
                   :counter="20"
+                  :rules="[() => !!orgName || 'This field is required']"
                   label="Organization Name"
                   required
                 ></v-text-field>
@@ -17,10 +18,9 @@
             </v-row>
           </v-container>
         </v-form>
-
         <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/list"> Search </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" text @click="onSubmit"> Search </v-btn>
         </v-card-actions>
       </v-card>
 
@@ -72,9 +72,9 @@ import { MemberEntity } from '@/types'
 import { Context } from '@nuxt/types'
 
 export default {
-  async asyncData({ app }: Context) {
+  async asyncData(ctx: Context) {
     return {
-      members: await app.$githubRepository.getMembers('lemoncode', 18, 1),
+      members: await ctx.app.$githubRepository.getMembers('lemoncode', 18, 1),
     }
   },
   data() {
@@ -83,6 +83,15 @@ export default {
       page: 1,
       orgName: 'lemoncode',
     }
+  },
+  methods: {
+    async onSubmit() {
+      this.members = await this.$githubRepository.getMembers(
+        this.orgName,
+        18,
+        1
+      )
+    },
   },
 }
 </script>
