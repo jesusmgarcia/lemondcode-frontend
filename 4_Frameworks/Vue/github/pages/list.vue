@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-form @submit.prevent="onSubmit" id="orgname-form">
+      <v-form id="orgname-form" @submit.prevent="onSubmit">
         <v-card class="mt-sm-8">
           <v-card-title class="headline"> Github Org List </v-card-title>
           <v-container>
@@ -28,35 +28,33 @@
       </v-form>
 
       <v-simple-table class="my-sm-8">
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Avatar</th>
-              <th class="text-left">Id</th>
-              <th class="text-left">Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in members" :key="item.id">
-              <td>
-                <v-avatar class="ma-sm-4" size="48px">
-                  <img
-                    v-if="item.avatar_url"
-                    :alt="item.login"
-                    :src="item.avatar_url"
-                  />
-                </v-avatar>
-              </td>
-              <td>{{ item.id }}</td>
+        <thead>
+          <tr>
+            <th class="text-left">Avatar</th>
+            <th class="text-left">Id</th>
+            <th class="text-left">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in members" :key="item.id">
+            <td>
+              <v-avatar class="ma-sm-4" size="48px">
+                <img
+                  v-if="item.avatar_url"
+                  :alt="item.login"
+                  :src="item.avatar_url"
+                />
+              </v-avatar>
+            </td>
+            <td>{{ item.id }}</td>
 
-              <td>
-                <nuxt-link :to="`/${item.login}`">
-                  {{ item.login }}
-                </nuxt-link>
-              </td>
-            </tr>
-          </tbody>
-        </template>
+            <td>
+              <nuxt-link :to="`/${item.login}`">
+                {{ item.login }}
+              </nuxt-link>
+            </td>
+          </tr>
+        </tbody>
       </v-simple-table>
       <div class="text-center">
         <v-pagination
@@ -70,30 +68,23 @@
   </v-row>
 </template>
 
-<script lang="ts">
-import { MemberEntity } from '@/types'
-import { Context } from '@nuxt/types'
-
+<script>
 export default {
-  async asyncData(ctx: Context) {
+  async asyncData(ctx) {
     return {
-      members: await ctx.app.$githubRepository.getMembers('lemoncode', 18, 1),
+      members: await ctx.app.$githubApi.getMembers('lemoncode', 18, 1),
     }
   },
   data() {
     return {
-      members: [] as MemberEntity[],
+      members: [],
       page: 1,
       orgName: 'lemoncode',
     }
   },
   methods: {
     async onSubmit() {
-      this.members = await this.$githubRepository.getMembers(
-        this.orgName,
-        18,
-        1
-      )
+      this.members = await this.$githubApi.getMembers(this.orgName, 18, 1)
     },
   },
 }

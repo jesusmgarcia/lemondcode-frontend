@@ -14,7 +14,7 @@
         </v-card-text>
 
         <v-card-actions>
-          <v-btn @click="onClick" color="primary" text>
+          <v-btn color="primary" text @click="onClick">
             Back to List Page
           </v-btn>
         </v-card-actions>
@@ -23,19 +23,16 @@
   </v-row>
 </template>
 
-<script lang="ts">
-import { MemberDetailEntity } from '@/types'
-import { Context } from '@nuxt/types'
-
+<script>
 export default {
-  async asyncData({ app, params }: Context) {
+  async asyncData({ app, params }) {
     return {
-      member: await app.$githubRepository.getMember(params.id),
+      member: await app.$githubApi.getMember(params.id),
     }
   },
   data() {
     return {
-      member: {} as MemberDetailEntity,
+      member: {},
     }
   },
   methods: {
