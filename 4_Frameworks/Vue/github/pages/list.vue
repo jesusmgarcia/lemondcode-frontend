@@ -8,12 +8,12 @@
             <v-row>
               <v-col cols="12" sm="12">
                 <v-text-field
-                  v-model="orgName"
+                  name="orgTextField"
                   :counter="20"
-                  :rules="[() => !!orgName || 'This field is required']"
                   label="Organization Name"
                   outlined
                   required
+                  :value="orgName"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -58,10 +58,11 @@
       </v-simple-table>
       <div class="text-center">
         <v-pagination
-          v-model="page"
-          :length="4"
+          :value="pageNumber"
+          :length="totalPages"
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
+          @input="onPageChange"
         ></v-pagination>
       </div>
     </v-col>
@@ -70,21 +71,66 @@
 
 <script>
 export default {
-  async asyncData(ctx) {
+  async asyncData({ app, store }) {
+    const itemsPerPage = 5
+
+    const { data, pages } = await app.$githubApi.getMembers(
+      store.state.githublist.orgName,
+      itemsPerPage,
+      store.state.githublist.pageNumber
+    )
+
     return {
-      members: await ctx.app.$githubApi.getMembers('lemoncode', 18, 1),
+      members: data,
+      totalPages: pages,
+      itemsPerPage,
     }
   },
   data() {
     return {
       members: [],
-      page: 1,
-      orgName: 'lemoncode',
+      totalPages: 1,
+      itemsPerPage: 1,
     }
   },
+  computed: {
+    orgName() {
+      return this.$store.state.githublist.orgName
+    },
+    pageNumber: {
+      get() {
+        return this.$store.state.githublist.pageNumber
+      },
+      set(newPageNumber) {
+        return newPageNumber
+      },
+    },
+  },
   methods: {
-    async onSubmit() {
-      this.members = await this.$githubApi.getMembers(this.orgName, 18, 1)
+    async onSubmit(submitEvent) {
+      this.$store.commit(
+        'githublist/setOrgName',
+        submitEvent.target.elements.orgTextField.value
+      )
+      const { data, pages } = await this.$githubApi.getMembers(
+        this.orgName,
+        this.itemsPerPage,
+        this.pageNumber
+      )
+
+      this.totalPages = pages
+      this.members = data
+    },
+    async onPageChange(value) {
+      this.$store.commit('githublist/setPageNumber', value)
+
+      const { data } = await this.$githubApi.getMembers(
+        this.orgName,
+        this.itemsPerPage,
+        this.pageNumber
+      )
+
+      this.members = data
     },
   },
 }
