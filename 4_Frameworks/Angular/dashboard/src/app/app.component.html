@@ -1,11 +1,16 @@
-<!-- Toolbar -->
-<app-public-menu></app-public-menu>
-<app-private-menu></app-private-menu>
+<div class="container">
+  <!-- Toolbar -->
+  <div class="header">
+    <app-public-menu></app-public-menu>
+    <app-private-menu></app-private-menu>
+  </div>
+  <!-- Content -->
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 
-<!-- Content -->
-<div class="content" role="main">
-  <router-outlet></router-outlet>
+  <!-- Footer -->
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
 </div>
-
-<!-- Footer -->
-<app-footer></app-footer>

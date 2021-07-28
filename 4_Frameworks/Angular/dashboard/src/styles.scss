@@ -1,22 +1,6 @@
-// Import material theming functions
-@import "~@angular/material/theming";
-@import "~@angular/material/prebuilt-themes/purple-green.css";
-/*
-// Copy the palettes from your selected theme (usually theme.scss).
-$app-primary: mat-palette($mat-gray);
-$app-accent: mat-palette($mat-green);
-$app-warn: mat-palette($mat-red);
-$app-back: mat-palette($mat-blue);
-
-// Create your Sass color vars (will be available in all the project)
-$primary: mat-color($app-primary);
-$accent: mat-color($app-accent);
-$warn: mat-color($app-warn);
-$back: mat-color($app-back);
-*/
 html,
 body {
-  height: 100%;
+  width: 100%;
 }
 body {
   margin: 0;
