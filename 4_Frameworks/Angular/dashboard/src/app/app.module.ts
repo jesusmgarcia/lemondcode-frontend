@@ -15,6 +15,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
 import { CrudComponent } from './pages/crud/crud.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { MaterialModule } from './material-module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { MaterialModule } from './material-module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

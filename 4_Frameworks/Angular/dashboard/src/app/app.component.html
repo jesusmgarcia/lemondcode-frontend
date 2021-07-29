@@ -1,8 +1,8 @@
 <div class="container">
   <!-- Toolbar -->
   <div class="header">
-    <app-public-menu></app-public-menu>
-    <app-private-menu></app-private-menu>
+    <app-public-menu *ngIf="!isAuthenticated"></app-public-menu>
+    <app-private-menu *ngIf="isAuthenticated"></app-private-menu>
   </div>
   <!-- Content -->
   <div class="content">

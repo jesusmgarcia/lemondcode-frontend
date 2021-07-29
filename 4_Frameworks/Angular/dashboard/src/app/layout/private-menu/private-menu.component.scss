@@ -16,3 +16,12 @@
 .mat-list-item {
   color: white;
 }
+
+.mat-list-item:hover {
+  background-color: rgb(62, 131, 50);
+  border-radius: 10px;
+}
+
+.mat-icon {
+  padding-right: 10px;
+}

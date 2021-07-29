@@ -10,6 +10,10 @@
     <a mat-list-item routerLink="/dashboard"> Dashboard </a>
     <a mat-list-item routerLink="/gallery"> Gallery </a>
     <a mat-list-item routerLink="/crud"> Crud </a>
-    <a mat-list-item routerLink="/profile"> Profile </a>
+    <a mat-list-item routerLink="/profile">
+      <mat-icon aria-hidden="false" aria-label="Example icon"> face </mat-icon>
+      {{ showUser }}
+    </a>
+    <a mat-list-item (click)="logout()"> Logout </a>
   </mat-nav-list>
 </mat-toolbar>
