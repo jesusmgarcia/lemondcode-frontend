@@ -13,12 +13,19 @@
   flex-direction: row;
 }
 
-.mat-list-item {
-  color: white;
+.mat-list-base {
+  padding: 8px 4px;
 }
 
-.mat-list-item:hover {
-  background-color: rgb(62, 131, 50);
+.mat-list-item {
+  color: white;
+  margin: 0 4px;
+}
+
+.active-link,
+.mat-list-item:hover,
+.mat-list-item:focus {
+  background: rgba(0, 0, 0, 0.24);
   border-radius: 10px;
 }
 

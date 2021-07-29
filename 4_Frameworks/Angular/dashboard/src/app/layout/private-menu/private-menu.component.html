@@ -7,10 +7,14 @@
   <span>My App</span>
   <div class="spacer"></div>
   <mat-nav-list class="list-horizontal">
-    <a mat-list-item routerLink="/dashboard"> Dashboard </a>
-    <a mat-list-item routerLink="/gallery"> Gallery </a>
-    <a mat-list-item routerLink="/crud"> Crud </a>
-    <a mat-list-item routerLink="/profile">
+    <a mat-list-item routerLinkActive="active" routerLink="/dashboard">
+      Dashboard
+    </a>
+    <a mat-list-item routerLinkActive="active" routerLink="/gallery">
+      Gallery
+    </a>
+    <a mat-list-item routerLinkActive="active" routerLink="/crud"> Crud </a>
+    <a mat-list-item routerLinkActive="active" routerLink="/profile">
       <mat-icon aria-hidden="false" aria-label="Example icon"> face </mat-icon>
       {{ showUser }}
     </a>
