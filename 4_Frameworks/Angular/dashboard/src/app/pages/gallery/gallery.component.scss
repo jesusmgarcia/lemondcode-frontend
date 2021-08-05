@@ -2,3 +2,39 @@ h1 {
   text-align: center;
   padding-top: 3rem;
 }
+
+button {
+  margin: 1rem;
+}
+
+.img-container {
+  margin: auto;
+  width: 800px;
+  border: 3px solid;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.img-container .img-full {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.button-list {
+  display: flex;
+  justify-content: center;
+}
+
+.img-preview-list {
+  display: flex;
+  justify-content: center;
+}
+
+.img-preview-list img {
+  margin: 1rem;
+}
+
+.img-preview-list .mat-icon {
+  align-self: center;
+}
