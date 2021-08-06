@@ -2,17 +2,24 @@
 
 <div>
   <div class="img-container">
-    <img
-      class="img-full"
-      src="https://mmtstock.com/wp-content/uploads/2017/09/P7040338.jpg"
-    />
+    <img class="img-full" [src]="images[selectedImage]?.src" />
     <div class="button-list">
-      <button color="primary" mat-raised-button>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="previousImage()"
+        [disabled]="selectedImage <= 0"
+      >
         <mat-icon aria-hidden="false" aria-label="Before">
           navigate_before
         </mat-icon>
       </button>
-      <button color="primary" mat-raised-button>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="nextImage()"
+        [disabled]="selectedImage >= images.length - 1"
+      >
         <mat-icon aria-hidden="false" aria-label="Next">
           navigate_next
         </mat-icon>
@@ -25,26 +32,51 @@
           zoom_out
         </mat-icon>
       </button>
-      <button color="warn" mat-raised-button>
-        <mat-icon aria-hidden="false" aria-label="Play"> play_arrow </mat-icon>
-        <mat-icon aria-hidden="false" aria-label="Stop"> stop </mat-icon>
+      <button color="warn" mat-raised-button (click)="play()">
+        <mat-icon *ngIf="playButton" aria-hidden="false" aria-label="Play">
+          play_arrow
+        </mat-icon>
+        <mat-icon *ngIf="!playButton" aria-hidden="false" aria-label="Stop">
+          stop
+        </mat-icon>
       </button>
     </div>
     <div class="img-preview-list">
-      <mat-icon aria-hidden="false" aria-label="Left"> west </mat-icon>
-      <img
-        width="120"
-        src="https://mmtstock.com/wp-content/uploads/2017/09/P7040338.jpg"
-      />
-      <img
-        width="120"
-        src="https://mmtstock.com/wp-content/uploads/2017/09/P6290012.jpg"
-      />
-      <img
-        width="120"
-        src="https://mmtstock.com/wp-content/uploads/2015/08/IMG_0903150810.jpg"
-      />
-      <mat-icon aria-hidden="false" aria-label="Right"> east </mat-icon>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="previousPreviewImage()"
+        [disabled]="selectedPreviewImage <= 1"
+      >
+        <mat-icon aria-hidden="false" aria-label="Left">
+          arrow_circle_left
+        </mat-icon>
+      </button>
+      <ng-container
+        *ngFor="
+          let image of images
+            | slice
+              : sliceFirstRange(selectedPreviewImage)
+              : sliceEndRange(selectedPreviewImage)
+        "
+      >
+        <img
+          width="120"
+          (click)="selectImage(image)"
+          [src]="image.src"
+          [class.selected-img]="image.id == selectedImage"
+        />
+      </ng-container>
+      <button
+        color="primary"
+        mat-raised-button
+        (click)="nextPreviewImage()"
+        [disabled]="selectedPreviewImage >= images.length - 2"
+      >
+        <mat-icon aria-hidden="false" aria-label="Left">
+          arrow_circle_right
+        </mat-icon>
+      </button>
     </div>
   </div>
 </div>

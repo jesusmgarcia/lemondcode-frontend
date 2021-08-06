@@ -10,15 +10,14 @@ button {
 .img-container {
   margin: auto;
   width: 800px;
-  border: 3px solid;
   padding: 10px;
-  border-radius: 10px;
 }
 
 .img-container .img-full {
   max-width: 100%;
   max-height: 100%;
   display: block;
+  border-radius: 10px;
 }
 
 .button-list {
@@ -29,10 +28,17 @@ button {
 .img-preview-list {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .img-preview-list img {
   margin: 1rem;
+  opacity: 0.5;
+  border-radius: 10px;
+}
+
+.img-preview-list .selected-img {
+  opacity: 1;
 }
 
 .img-preview-list .mat-icon {
