@@ -18,6 +18,7 @@ export class GalleryComponent implements OnInit {
   selectedPreviewImage: number = 1;
   playButton: boolean = true;
   intervalId: number = 0;
+  scaleFactor: number = 1.0;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -29,10 +30,12 @@ export class GalleryComponent implements OnInit {
 
   selectImage(image: Image): void {
     this.selectedImage = image.id;
+    this.scaleFactor = 1.0;
   }
 
   nextImage(): void {
     this.selectedImage++;
+    this.scaleFactor = 1.0;
 
     if (this.selectedImage >= this.images.length) this.selectedImage = 0;
 
@@ -41,6 +44,7 @@ export class GalleryComponent implements OnInit {
 
   previousImage(): void {
     this.selectedImage--;
+    this.scaleFactor = 1.0;
 
     if (this.selectedImage < 0) this.selectedImage = this.images.length - 1;
 
@@ -62,6 +66,9 @@ export class GalleryComponent implements OnInit {
 
   play(): void {
     if (this.playButton) {
+      // Added to improve feedback to the user
+      this.nextImage();
+
       // play gallery
       this.intervalId = window.setInterval(() => {
         this.nextImage();
@@ -88,5 +95,13 @@ export class GalleryComponent implements OnInit {
       if (id === 0) return id + 3;
       else return id + 2;
     }
+  }
+
+  scaleIn(): void {
+    this.scaleFactor += 0.1;
+  }
+
+  scaleOut(): void {
+    this.scaleFactor -= 0.1;
   }
 }

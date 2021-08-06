@@ -1,8 +1,14 @@
 <h1>Gallery Page</h1>
 
 <div>
-  <div class="img-container">
-    <img class="img-full" [src]="images[selectedImage]?.src" />
+  <div class="gallery-container">
+    <div class="img-container">
+      <img
+        [style.transform]="'scale(' + scaleFactor + ')'"
+        class="img-full"
+        [src]="images[selectedImage]?.src"
+      />
+    </div>
     <div class="button-list">
       <button
         color="primary"
@@ -24,10 +30,10 @@
           navigate_next
         </mat-icon>
       </button>
-      <button color="accent" mat-raised-button>
+      <button color="accent" mat-raised-button (click)="scaleIn()">
         <mat-icon aria-hidden="false" aria-label="Zoom In"> zoom_in </mat-icon>
       </button>
-      <button color="accent" mat-raised-button>
+      <button color="accent" mat-raised-button (click)="scaleOut()">
         <mat-icon aria-hidden="false" aria-label="Zoom Out">
           zoom_out
         </mat-icon>
