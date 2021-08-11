@@ -25,7 +25,17 @@
         />
         <mat-error> Please provide a password with 8 chars or more </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" [disabled]="form.invalid">
+      <mat-spinner
+        *ngIf="showSpinner"
+        class="spinner"
+        diameter="60"
+      ></mat-spinner>
+      <button
+        *ngIf="!showSpinner"
+        mat-raised-button
+        color="primary"
+        [disabled]="form.invalid"
+      >
         Login
       </button>
     </form>

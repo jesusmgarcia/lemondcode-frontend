@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginEntity } from '../../model/LoginEntity';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,10 @@ import { LoginEntity } from '../../model/LoginEntity';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  showSpinner: boolean = false;
   public loginInvalid = false;
+
+  private isLoggedRef: Subscription | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -27,21 +31,33 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnDestroy() {
+    if (this.isLoggedRef !== undefined) this.isLoggedRef.unsubscribe();
+  }
+
   onSubmit(): void {
     this.loginInvalid = false;
 
     if (this.form.valid) {
       try {
+        this.showSpinner = true;
+
         const username = this.form.get('username')?.value;
         const password = this.form.get('password')?.value;
 
         const login: LoginEntity = { username, password };
 
-        if (this.authService.login(login)) {
-          this.router.navigate(['/dashboard']);
-        } else {
-          this.loginInvalid = true;
-        }
+        this.isLoggedRef = this.authService
+          .login(login)
+          .subscribe((isLoggedRet: boolean) => {
+            if (isLoggedRet) {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.loginInvalid = true;
+            }
+
+            this.showSpinner = false;
+          });
       } catch (err) {
         this.loginInvalid = true;
       }
