@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { LoginEntity } from '../model/LoginEntity';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,27 +13,27 @@ export class AuthService {
   public isAuthenticated = new BehaviorSubject<boolean>(false);
   private currentUser = '';
 
-  private isLoggedSource = new Subject<void>();
-
   constructor(
     private router: Router,
     private localStorageService: LocalStorageService
   ) {}
 
   login(login: LoginEntity): Observable<boolean> {
+    let retValue: Observable<boolean>;
+
     if (
       login.username === 'master8@lemoncode.net' &&
       login.password === '12345678'
     ) {
-      this.isAuthenticated.next(true);
+      retValue = of(true).pipe(delay(2000), tap(() => this.isAuthenticated.next(true)));
+
       this.localStorageService.set(login.username, String(true));
       this.currentUser = login.username;
-      this.isLoggedSource.next();
-
-      return of(true).pipe(delay(2000));
     } else {
-      return of(false).pipe(delay(2000));
+      retValue = of(false).pipe(delay(2000));
     }
+
+    return retValue;
   }
   logout(redirect: string, email: string): void {
     this.localStorageService.remove(email);

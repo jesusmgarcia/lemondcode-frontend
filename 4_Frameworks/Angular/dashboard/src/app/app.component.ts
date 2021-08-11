@@ -8,15 +8,13 @@ import { AuthService } from 'src/app/services/auth.service';
 export class AppComponent {
   title = 'Dashboard';
 
-  isAuthenticated = false;
+  //isAuthenticated = false;
 
   constructor(public authService: AuthService) {
-    this.authService.isAuthenticated.subscribe(
+    /*this.authService.isAuthenticated.subscribe(
       (isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated)
-    );
+    );*/
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }

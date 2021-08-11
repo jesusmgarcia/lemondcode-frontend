@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   showSpinner: boolean = false;
-  public loginInvalid = false;
+  loginInvalid = false;
 
   private isLoggedRef: Subscription | undefined;
 
