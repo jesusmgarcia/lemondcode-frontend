@@ -37,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-// TODO: In order to persist organization name, save it to localStorage
-
 export const ListPage: React.FC = () => {
 	// organization context
 	const { orgName, setOrgName } = React.useContext(OrgContext);
@@ -89,6 +87,7 @@ export const ListPage: React.FC = () => {
 		if (e) e.preventDefault();
 
 		setCurrentPage(1);
+		onLoadMemberList();
 	}
 
 	// pagination changed, set the indicated page and reload the member list
