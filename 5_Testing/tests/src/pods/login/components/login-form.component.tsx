@@ -11,7 +11,7 @@ interface Props {
   onLogin: (login: Login) => void;
 }
 
-export const LoginFormComponent: React.FunctionComponent<Props> = props => {
+export const LoginFormComponent: React.FunctionComponent<Props> = (props) => {
   const { onLogin } = props;
   return (
     <Formik
@@ -23,11 +23,13 @@ export const LoginFormComponent: React.FunctionComponent<Props> = props => {
         <Form className={classes.root}>
           <TextFieldComponent
             name="user"
+            id="user"
             label={`${literals.components.fields.user} *`}
             variant="outlined"
           />
           <TextFieldComponent
             name="password"
+            id="password"
             label={`${literals.components.fields.password} *`}
             type="password"
             variant="outlined"
