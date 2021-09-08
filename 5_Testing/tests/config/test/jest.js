@@ -1,6 +1,6 @@
 module.exports = {
   rootDir: '../../',
-  modulePathIgnorePatterns: ["<rootDir>/cypress/"],
+  testPathIgnorePatterns: ["<rootDir>/cypress/"],
   preset: 'ts-jest',
   restoreMocks: true,
   testEnvironment: 'jsdom',
