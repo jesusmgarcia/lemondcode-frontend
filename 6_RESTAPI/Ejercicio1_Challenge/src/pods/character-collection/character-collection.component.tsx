@@ -13,13 +13,10 @@ export const CharacterCollectionComponent: React.FunctionComponent<Props> = (
 ) => {
   const { characterCollection } = props;
 
-  console.log(characterCollection);
-
   return (
     <div className={classes.root}>
       <ul className={classes.list}>
         {characterCollection.map((character) => {
-          console.log(character);
           return (
             <li key={character.id}>
               <CharacterCard character={character} />

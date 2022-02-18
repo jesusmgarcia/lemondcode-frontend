@@ -3,9 +3,9 @@ export interface locationEntityVm {
   name: string;
   /*type: string;
   dimension: string;
-  residents: string[];*/
+  residents: string[];
   url: string;
-  /*created: string;*/
+  created: string;*/
 }
 
 export interface locationPageEntityVm {

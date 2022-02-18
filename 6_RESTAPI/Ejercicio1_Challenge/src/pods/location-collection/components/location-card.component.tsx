@@ -29,12 +29,12 @@ export const LocationCard: React.FunctionComponent<Props> = (props) => {
       />
       <CardContent>
         <div className={classes.content}>
-          <CardMedia
+          {/*<CardMedia
             image={location.url}
             //title={character.name}
             style={{ height: 0, paddingTop: '56.25%' }}
           />
-          {/*<Typography variant="subtitle1" gutterBottom>
+          <Typography variant="subtitle1" gutterBottom>
             {character.description}
   </Typography>*/}
         </div>

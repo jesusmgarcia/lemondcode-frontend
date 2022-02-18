@@ -1,18 +1,22 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import { linkRoutes } from 'core/router';
 import { useEpisodeCollection } from './episode-collection.hook';
 import { EpisodeCollectionComponent } from './episode-collection.component';
 import { Box, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-export const EpisodeCollectionContainer = () => {
+interface Props {
+  url: string;
+}
+
+export const EpisodeCollectionContainer: React.FunctionComponent<Props> = (
+  props
+) => {
+  const { url } = props;
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const url = 'https://rickandmortyapi.com/api/episode/?page=' + currentPage;
+  const currentUrl = url + '/?page=' + currentPage;
 
   const { episodeCollection, pageInfo, loadEpisodeCollection } =
-    useEpisodeCollection(url);
-  const history = useHistory();
+    useEpisodeCollection(currentUrl);
 
   React.useEffect(() => {
     loadEpisodeCollection();

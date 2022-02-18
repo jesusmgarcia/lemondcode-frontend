@@ -1,18 +1,23 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-//import { linkRoutes } from 'core/router';
 import { useLocationCollection } from './location-collection.hook';
 import { LocationCollectionComponent } from './location-collection.component';
 import { Box, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-export const LocationCollectionContainer = () => {
+interface Props {
+  url: string;
+}
+
+export const LocationCollectionContainer: React.FunctionComponent<Props> = (
+  props
+) => {
+  const { url } = props;
+
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const url = 'https://rickandmortyapi.com/api/location/?page=' + currentPage;
+  const currentUrl = url + '/?page=' + currentPage;
 
   const { locationCollection, pageInfo, loadLocationCollection } =
-    useLocationCollection(url);
-  const history = useHistory();
+    useLocationCollection(currentUrl);
 
   React.useEffect(() => {
     loadLocationCollection();

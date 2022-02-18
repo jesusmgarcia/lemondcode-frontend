@@ -3,12 +3,20 @@ import { CharacterCollectionContainer } from 'pods/character-collection';
 import { EpisodeCollectionContainer } from 'pods/episode-collection';
 import { LocationCollectionContainer } from 'pods/location-collection';
 import * as React from 'react';
+import { useHomeBaseUrls } from './home.hook';
 import * as classes from './home.styles';
+
+const apiUrl = 'https://rickandmortyapi.com/api';
 
 export const HomeComponent: React.FunctionComponent = () => {
   const [showCharacters, setShowCharacters] = React.useState<boolean>(false);
   const [showLocations, setShowLocations] = React.useState<boolean>(false);
   const [showEpisodes, setShowEpisodes] = React.useState<boolean>(false);
+  const { baseUrls, loadBaseUrls } = useHomeBaseUrls(apiUrl);
+
+  React.useEffect(() => {
+    loadBaseUrls();
+  }, []);
 
   const onClickCharacters = () => {
     setShowCharacters(true);
@@ -41,9 +49,13 @@ export const HomeComponent: React.FunctionComponent = () => {
           Episodes
         </Button>
       </ul>
-      {showCharacters && <CharacterCollectionContainer />}
-      {showLocations && <LocationCollectionContainer />}
-      {showEpisodes && <EpisodeCollectionContainer />}
+      {showCharacters && (
+        <CharacterCollectionContainer url={baseUrls.characters} />
+      )}
+      {showLocations && (
+        <LocationCollectionContainer url={baseUrls.locations} />
+      )}
+      {showEpisodes && <EpisodeCollectionContainer url={baseUrls.episodes} />}
     </div>
   );
 };

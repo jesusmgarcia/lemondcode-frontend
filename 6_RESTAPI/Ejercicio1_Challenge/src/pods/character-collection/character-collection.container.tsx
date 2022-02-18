@@ -1,18 +1,22 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
-import { linkRoutes } from 'core/router';
 import { useCharacterCollection } from './character-collection.hook';
 import { CharacterCollectionComponent } from './character-collection.component';
 import { Box, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-export const CharacterCollectionContainer = () => {
+interface Props {
+  url: string;
+}
+
+export const CharacterCollectionContainer: React.FunctionComponent<Props> = (
+  props
+) => {
+  const { url } = props;
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const url = 'https://rickandmortyapi.com/api/character/?page=' + currentPage;
+  const currentUrl = url + '/?page=' + currentPage;
 
   const { characterCollection, pageInfo, loadCharacterCollection } =
-    useCharacterCollection(url);
-  const history = useHistory();
+    useCharacterCollection(currentUrl);
 
   React.useEffect(() => {
     loadCharacterCollection();
