@@ -37,17 +37,14 @@ export const CharacterContainer: React.FunctionComponent = (props) => {
   const { id } = useParams<IParams>();
   const url = 'https://rickandmortyapi.com/api/character/' + id;
 
-  console.log('url: ', url);
   const history = useHistory();
 
   const handleLoadCharacter = async () => {
     const apiCharacter = await api.getCharacter(url);
-    console.log('char: ', apiCharacter);
     setCharacter(apiCharacter);
   };
 
   React.useEffect(() => {
-    console.log(id);
     if (id) {
       handleLoadCharacter();
     }
