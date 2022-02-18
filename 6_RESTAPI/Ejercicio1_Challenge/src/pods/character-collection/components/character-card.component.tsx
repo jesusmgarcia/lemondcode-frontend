@@ -7,18 +7,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar/Avatar';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { characterEntityVm } from '../character-collection.vm';
 import * as classes from './character-card.styles';
+import { IconButton } from '@material-ui/core';
 
 interface Props {
   character: characterEntityVm;
+  onShow: (id: number) => void;
 }
 
 export const CharacterCard: React.FunctionComponent<Props> = (props) => {
-  const { character } = props;
+  const { character, onShow } = props;
 
   return (
     <Card>
@@ -39,14 +39,11 @@ export const CharacterCard: React.FunctionComponent<Props> = (props) => {
   </Typography>*/}
         </div>
       </CardContent>
-      {/*<CardActions>
-        <IconButton onClick={() => onEdit(character.id)}>
-          <EditIcon />
+      <CardActions>
+        <IconButton onClick={() => onShow(character.id)}>
+          <VisibilityIcon />
         </IconButton>
-        <IconButton onClick={() => onDelete(character.id)}>
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>*/}
+      </CardActions>
     </Card>
   );
 };

@@ -18,6 +18,10 @@ export const HomeComponent: React.FunctionComponent = () => {
     loadBaseUrls();
   }, []);
 
+  React.useEffect(() => {
+    if (baseUrls.characters) setShowCharacters(true);
+  }, [baseUrls]);
+
   const onClickCharacters = () => {
     setShowCharacters(true);
     setShowLocations(false);

@@ -6,12 +6,13 @@ import * as classes from './character-collection.styles';
 
 interface Props {
   characterCollection: characterEntityVm[];
+  onShow: (id: number) => void;
 }
 
 export const CharacterCollectionComponent: React.FunctionComponent<Props> = (
   props
 ) => {
-  const { characterCollection } = props;
+  const { characterCollection, onShow } = props;
 
   return (
     <div className={classes.root}>
@@ -19,7 +20,7 @@ export const CharacterCollectionComponent: React.FunctionComponent<Props> = (
         {characterCollection.map((character) => {
           return (
             <li key={character.id}>
-              <CharacterCard character={character} />
+              <CharacterCard character={character} onShow={onShow} />
             </li>
           );
         })}

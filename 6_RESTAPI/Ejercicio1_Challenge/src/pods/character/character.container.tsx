@@ -1,54 +1,61 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import * as api from './api';
-import { createEmptyCharacter, Character } from './character.vm';
-import {
-  mapCharacterFromApiToVm,
-  mapCharacterFromVmToApi,
-} from './character.mappers';
-import { Lookup } from 'common/models';
+import { characterEntityApi } from './api';
 import { CharacterComponent } from './character.component';
 
+const createEmptyCharacter = (): characterEntityApi => ({
+  id: 0,
+  name: '',
+  status: '',
+  species: '',
+  type: '',
+  gender: '',
+  origin: {
+    name: '',
+    url: '',
+  },
+  location: {
+    name: '',
+    url: '',
+  },
+  image: '',
+  episode: [],
+  url: '',
+  created: '',
+});
+
+interface IParams {
+  id: string;
+}
+
 export const CharacterContainer: React.FunctionComponent = (props) => {
-  const [character, setCharacter] = React.useState<Character>(
+  const [character, setCharacter] = React.useState<characterEntityApi>(
     createEmptyCharacter()
   );
-  const [cities, setCities] = React.useState<Lookup[]>([]);
-  //const { id } = useParams();
+
+  const { id } = useParams<IParams>();
+  const url = 'https://rickandmortyapi.com/api/character/' + id;
+
+  console.log('url: ', url);
   const history = useHistory();
 
-  const handleLoadCityCollection = async () => {
-    const apiCities = await api.getCities();
-    setCities(apiCities);
+  const handleLoadCharacter = async () => {
+    const apiCharacter = await api.getCharacter(url);
+    console.log('char: ', apiCharacter);
+    setCharacter(apiCharacter);
   };
-
-  /*const handleLoadCharacter = async () => {
-    const apiCharacter = await api.getCharacter(id);
-    setCharacter(mapCharacterFromApiToVm(apiCharacter));
-  };*/
 
   React.useEffect(() => {
-    /*if (id) {
+    console.log(id);
+    if (id) {
       handleLoadCharacter();
-    }*/
-    handleLoadCityCollection();
+    }
   }, []);
 
-  const handleSave = async (character: Character) => {
-    const apiCharacter = mapCharacterFromVmToApi(character);
-    const success = await api.saveCharacter(apiCharacter);
-    if (success) {
-      history.goBack();
-    } else {
-      alert('Error on save character');
-    }
+  const handleGoBack = async () => {
+    history.goBack();
   };
 
-  return (
-    <CharacterComponent
-      character={character}
-      cities={cities}
-      onSave={handleSave}
-    />
-  );
+  return <CharacterComponent character={character} onOk={handleGoBack} />;
 };

@@ -1,4 +1,4 @@
-import * as apiModel from './api/character-collection.api-model';
+import * as apiModel from '../character/api/character.api-model';
 import * as viewModel from './character-collection.vm';
 
 export const mapFromApiToVm = (

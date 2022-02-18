@@ -1,50 +1,111 @@
 import React from 'react';
-import { Formik, Form } from 'formik';
-import {
-  TextFieldComponent,
-  SelectComponent,
-  RatingComponent,
-} from 'common/components';
-import { Button } from '@material-ui/core';
-import { formValidation } from './character.validations';
-import { Character } from './character.vm';
+import { Button, TextField } from '@material-ui/core';
 import * as classes from './character.styles';
-import { Lookup } from 'common/models';
+import { characterEntityApi } from './api';
 
 interface Props {
-  character: Character;
-  cities: Lookup[];
-  onSave: (character: Character) => void;
+  character: characterEntityApi;
+  onOk: () => void;
 }
 
 export const CharacterComponent: React.FunctionComponent<Props> = (props) => {
-  const { character, cities, onSave } = props;
+  const { character, onOk } = props;
 
   return (
-    <Formik
-      onSubmit={onSave}
-      initialValues={character}
-      enableReinitialize={true}
-      validate={formValidation.validateForm}
-    >
-      {() => (
-        <Form className={classes.root}>
-          <TextFieldComponent name="name" label="Name" />
-          <TextFieldComponent name="address" label="Address" />
-          <RatingComponent name="rating" max={5} />
-          <SelectComponent name="city" label="City" items={cities} />
-          <TextFieldComponent
-            name="description"
-            label="Description"
-            multiline={true}
-            rows={3}
-            rowsMax={5}
-          />
-          <Button type="submit" variant="contained" color="primary">
-            Save
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <form className={classes.root} noValidate autoComplete="off">
+      <div>
+        <img src={character.image} style={{ width: 450 }} />
+        <TextField
+          label="Name"
+          style={{ margin: 8 }}
+          value={character.name}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Status"
+          style={{ margin: 8 }}
+          value={character.status}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Species"
+          style={{ margin: 8 }}
+          value={character.species}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Type"
+          style={{ margin: 8 }}
+          value={character.type}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Gender"
+          style={{ margin: 8 }}
+          value={character.gender}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Origin"
+          style={{ margin: 8 }}
+          value={character.origin.name}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Location"
+          style={{ margin: 8 }}
+          value={character.location.name}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Created"
+          style={{ margin: 8 }}
+          value={character.created}
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          margin="normal"
+        />
+      </div>
+      <div style={{ width: '100%', marginTop: '2rem' }}>
+        <Button
+          variant="contained"
+          fullWidth
+          color="primary"
+          onClick={() => onOk()}
+        >
+          Go Back
+        </Button>
+      </div>
+    </form>
   );
 };
