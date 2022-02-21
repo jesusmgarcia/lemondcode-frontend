@@ -24,3 +24,9 @@ export const list = css`
     grid-template-columns: repeat(4, 1fr);
   }
 `;
+
+export const form = css`
+  width: 50%;
+  margin: auto;
+  margin-bottom: 4rem;
+`;

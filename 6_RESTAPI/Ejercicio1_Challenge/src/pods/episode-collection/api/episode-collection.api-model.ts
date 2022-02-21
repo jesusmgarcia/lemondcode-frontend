@@ -1,12 +1,4 @@
-export interface episodeEntityApi {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: string[];
-  url: string;
-  created: string;
-}
+import { episodeEntityApi } from 'pods/episode/api';
 
 export interface episodePageEntityApi {
   info: {

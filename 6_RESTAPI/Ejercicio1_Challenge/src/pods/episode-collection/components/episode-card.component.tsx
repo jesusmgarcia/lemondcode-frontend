@@ -12,13 +12,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { episodeEntityVm } from '../episode-collection.vm';
 import * as classes from './episode-card.styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 interface Props {
   episode: episodeEntityVm;
+  onShow: (id: number) => void;
 }
 
 export const EpisodeCard: React.FunctionComponent<Props> = (props) => {
-  const { episode } = props;
+  const { episode, onShow } = props;
 
   return (
     <Card>
@@ -38,15 +40,12 @@ export const EpisodeCard: React.FunctionComponent<Props> = (props) => {
             {character.description}
           </Typography>
         </div>
-      </CardContent>
+      </CardContent>*/}
       <CardActions>
-        <IconButton onClick={() => onEdit(character.id)}>
-          <EditIcon />
+        <IconButton onClick={() => onShow(episode.id)}>
+          <VisibilityIcon />
         </IconButton>
-        <IconButton onClick={() => onDelete(character.id)}>
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>*/}
+      </CardActions>
     </Card>
   );
 };

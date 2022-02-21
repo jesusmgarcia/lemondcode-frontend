@@ -6,26 +6,20 @@ import * as classes from './episode-collection.styles';
 
 interface Props {
   episodeCollection: episodeEntityVm[];
-  /*onCreatecharacter: () => void;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;*/
+  onShow: (id: number) => void;
 }
 
 export const EpisodeCollectionComponent: React.FunctionComponent<Props> = (
   props
 ) => {
-  const { episodeCollection/*, onCreatecharacter, onEdit, onDelete*/ } = props;
+  const { episodeCollection, onShow } = props;
 
   return (
     <div className={classes.root}>
       <ul className={classes.list}>
         {episodeCollection.map((episode) => (
           <li key={episode.id}>
-            <EpisodeCard
-              episode={episode}
-              /*onEdit={onEdit}
-              onDelete={onDelete}*/
-            />
+            <EpisodeCard episode={episode} onShow={onShow} />
           </li>
         ))}
       </ul>

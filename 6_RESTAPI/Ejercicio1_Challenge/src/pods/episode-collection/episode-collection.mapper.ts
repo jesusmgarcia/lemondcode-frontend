@@ -1,4 +1,4 @@
-import * as apiModel from './api/episode-collection.api-model';
+import * as apiModel from '../episode/api/episode.api-model';
 import * as viewModel from './episode-collection.vm';
 
 export const mapFromApiToVm = (
