@@ -91,3 +91,7 @@ yarn-error.log*
 
 # Vim swap files
 **/*.swp
+
+# Cypress Videos and Screenshots
+**/cypress/videos
+**/cypress/screenshots

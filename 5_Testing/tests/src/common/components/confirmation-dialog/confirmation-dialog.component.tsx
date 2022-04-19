@@ -10,7 +10,7 @@ interface LabelProps {
   acceptButton: string;
 }
 
-interface Props {
+export interface Props {
   isOpen: boolean;
   onAccept: () => void;
   onClose: () => void;
@@ -18,7 +18,9 @@ interface Props {
   labels: LabelProps;
 }
 
-export const ConfirmationDialogComponent: React.FunctionComponent<Props> = props => {
+export const ConfirmationDialogComponent: React.FunctionComponent<Props> = (
+  props
+) => {
   const { isOpen, onAccept, onClose, title, labels, children } = props;
 
   const handleAccept = () => {
